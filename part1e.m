@@ -1,5 +1,8 @@
 function part1e(djiaw)
-
+    
+    % output time range 
+    fprintf('\nResults for First Decade of Data:\n');
+    
     % chosen value of p from part 1d
     p = 10;
     
@@ -35,23 +38,23 @@ function part1e(djiaw)
     end
     
     % output upper bounds
-    fprintf('\nUpper bound on how much you could make if you made\n');
-    fprintf('omniscient trading decisions: $%.2f\n', investment);
+    fprintf('\n\tUpper bound on how much you could make if you made\n');
+    fprintf('\tomniscient trading decisions: $%.2f\n', investment);
     
     % determine lower bound (all money left in bank)
     % bank_gain was calculated previously
     investment = 1000*bank_gain^N;
     
     % output lower bound
-    fprintf('\nLower bound on how much you could make if you only\n');
-    fprintf('invested your money in the bank: $%.2f\n', investment);
+    fprintf('\n\tLower bound on how much you could make if you only\n');
+    fprintf('\tinvested your money in the bank: $%.2f\n', investment);
     
     % determine lower bound (all money placed in stock market)
     investment = 1000*djiaw(N+p)/djiaw(p);
     
     % output lower bound
-    fprintf('\nLower bound on how much you could make if you only\n');
-    fprintf('invested your money in the stock market: $%.2f\n', investment);
+    fprintf('\n\tLower bound on how much you could make if you only\n');
+    fprintf('\tinvested your money in the stock market: $%.2f\n', investment);
     
     % make trading decision using the predictor results
     
@@ -81,6 +84,6 @@ function part1e(djiaw)
     end
     
     % output results of linear predictor
-    fprintf('\nHow much you if you based your decisions on\n');
-    fprintf('the linear predictor: $%.2f\n', investment);
+    fprintf('\n\tHow much you would make if you based your\n');
+    fprintf('\tdecisions on the linear predictor: $%.2f\n', investment);
 end
