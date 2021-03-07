@@ -21,14 +21,14 @@ function part1e(djiaw)
     % initial investment
     investment = 1000;
     
+    % gain from bank investment
+    bank_gain = (1+0.03/52);
+    
     % loop makes 520 trading decisions starting at p
-    for n = 1:520
-        
-        % gain from bank investment
-        bank_gain = (1+0.03/52);
+    for n = 1:N
         
         % gain from stock market investment
-        DJIA_gain = djiaw(n+p+1)/djiaw(n+p);
+        DJIA_gain = djiaw(n+p)/djiaw(n+p-1);
         
         % calculate next value of investment
         investment = investment*max([bank_gain DJIA_gain]);
@@ -39,7 +39,8 @@ function part1e(djiaw)
     fprintf('omniscient trading decisions: $%.2f\n', investment);
     
     % determine lower bound (all money left in bank)
-    investment = 1000*(1+0.03/52)^520;
+    % bank_gain was calculated previously
+    investment = 1000*bank_gain^N;
     
     % output lower bound
     fprintf('\nLower bound on how much you could make if you only\n');
@@ -51,4 +52,35 @@ function part1e(djiaw)
     % output lower bound
     fprintf('\nLower bound on how much you could make if you only\n');
     fprintf('invested your money in the stock market: $%.2f\n', investment);
+    
+    % make trading decision using the predictor results
+    
+    % predicted value of x (note we have to discard p-1 samples at
+    % beginning
+    xhat = filter(-flip(a),1,djiaw(1:N+p-1));
+    xhat = xhat(p:end);
+    
+    % initial investment
+    investment = 1000;
+    
+    % loop makes 520 trading decisions
+    for n=1:N
+        
+        % predicted gain using linear predictor
+        predicted_gain = xhat(n)/djiaw(n+p-1);
+        
+        % stock market gain (bank gain was already calculated)
+        DJIA_gain = djiaw(n+p)/djiaw(n+p-1);
+        
+        % determine whether to invest in bank or stock market
+        if (predicted_gain > bank_gain)
+            investment = DJIA_gain * investment;
+        else
+            investment = bank_gain * investment;
+        end
+    end
+    
+    % output results of linear predictor
+    fprintf('\nHow much you if you based your decisions on\n');
+    fprintf('the linear predictor: $%.2f\n', investment);
 end
