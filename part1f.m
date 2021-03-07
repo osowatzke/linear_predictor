@@ -65,8 +65,6 @@ function part1f(djiaw)
     xhat = filter(-flip(a),1,djiaw(end-N-p+1:end-1));
     xhat = xhat(p:end);
     
-    plot(1:N,xhat,1:N,djiaw(end-N+1:end))
-    
     % initial investment
     investment = 1000;
     
@@ -90,5 +88,4 @@ function part1f(djiaw)
     % output results of linear predictor
     fprintf('\n\tHow much you would make if you based your\n');
     fprintf('\tdecisions on the linear predictor: $%.2f\n', investment);
-    
-end
+end  
