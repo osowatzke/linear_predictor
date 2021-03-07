@@ -1,6 +1,6 @@
-% output linear predictor coefficients
+% determine linear predictor coefficients
 % for p=3 and N=520
-function a = part1b(djiaw)
+function [a,X] = part1b(djiaw)
 
     % problem specs
     p = 3;
