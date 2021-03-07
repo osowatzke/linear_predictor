@@ -268,11 +268,11 @@ for ii = p_chosen:p_chosen+N-1
     by_bank = pred_val * (1+0.03/52);
     
     % compute returns from DJIA
-    by_djia = pred_val * xhat_p(ii+1)/xhat_p(ii);
+    by_djia = pred_val * xhat_p(ii+1)/price(ii);
     
     % if DJIA has higher returns than the bank, then invest into DJIA 
     if by_djia > by_bank
-        pred_val = by_djia;
+        pred_val = pred_val * price(ii+1)/price(ii);
 
     % if bank has higher or same return, then invest into bank
     else
@@ -282,3 +282,5 @@ for ii = p_chosen:p_chosen+N-1
 end
 
 fprintf('(e) Predicted value: $ %.2f\n',pred_val);
+
+
