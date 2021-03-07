@@ -26,6 +26,6 @@ part1f(djiaw)
 load('eth_2019.mat');
 block_difficulty = block_difficulty(:,2);
 
-% use July 30, 2015 to Dec. 31, 2015 as training data
+% uses July 30, 2015 to Dec. 31, 2015 as training data
 % to predict difficulty on Jan. 1, 2016 to June 30, 2016. 
 part2a(block_difficulty);
