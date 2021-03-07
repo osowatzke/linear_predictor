@@ -1,4 +1,7 @@
+% function to plot DJIA and compare investing $1000 in the stock market to
+% investing $1000 in the bank with %3 APR
 function part1a(djiaw)
+
     % determine number of weeks
     num_weeks = length(djiaw);
     
