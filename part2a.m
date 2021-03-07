@@ -51,13 +51,15 @@ function part2a(block_difficulty)
     title('Plot of Real Difficulty and Predicted Difficulty');
     legend('Real Difficulty', 'Predicted Difficulty');
     
-    % part (b)
+    % part (b)-(c)
     
     % define range of p
     p = 2:4:50;
     
-    % define empty array for Least Squares Error
+    % define empty array for Least Squares Error and average predicted
+    % error
     E = zeros(1,length(p));
+    e_avg = zeros(1,length(p));
     
     % loop through each value of p
     for k = 1:length(p)
@@ -99,6 +101,7 @@ function part2a(block_difficulty)
         
         % determine least squares error
         e = x-xhat;
+        e_avg(k) = mean(e.^2);
         E(k) = e'*e;
     end  
     
@@ -108,5 +111,12 @@ function part2a(block_difficulty)
     xlabel('p');
     ylabel('E');
     title('Plot of Least Squares Error vs p');
+    
+    % plot average predicted error vs p
+    figure(7)
+    plot(p,e_avg)
+    xlabel('p');
+    ylabel('Average Predicted Error');
+    title('Plot of Average Predicted Error vs p');
 end
 
