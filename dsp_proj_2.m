@@ -211,7 +211,7 @@ rr = 0.03;
 % Setting the upper bound, initial investment of 1000 at week p
 upper_value = 1000;
 
-% Iterate from week p+1 onwards for 520 weeks
+% Iterate from week p+1 onwards for 520 weeks 
 for ii = p_chosen:p_chosen+N-1
     
     % compute returns from savings account
@@ -261,13 +261,14 @@ a_10 = a_vects{1,10};
 
 xhat_p = filter(-[0 a(10) a(9) a(8) a(7) a(6) a(5) a(4) a(3) a(2) a(1)],1,price);
 
+% compute predicted values from week 11 to week 530 using linear predictor
 for ii = p_chosen:p_chosen+N-1
     
     % compute returns from savings account
     by_bank = pred_val * (1+0.03/52);
     
     % compute returns from DJIA
-    by_djia = pred_val * xhat_p(ii+1)/price(ii);
+    by_djia = pred_val * xhat_p(ii+1)/xhat_p(ii);
     
     % if DJIA has higher returns than the bank, then invest into DJIA 
     if by_djia > by_bank
