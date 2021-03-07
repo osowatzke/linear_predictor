@@ -7,7 +7,7 @@ load('eth_2019.mat');
 price = block_difficulty(:,2);
 dateML = block_difficulty(:,1);
 
-%% (a) (i) p = 2
+%% (a) (a) p = 2
 
 % get the index from dateML for July 30, 2015 and December 31, 2015
 start = 0;
@@ -72,8 +72,10 @@ ylabel('Block Difficulty');
 title('Predicted and Real Block Difficulty');
 xlabel('Week');
 
-%% (a) (ii) p = [2:4:50]
+%% (a) (b) p = [2:4:50]
 err = [];
+rhat_vects = cell(1,13);
+count = 1;
 
 for p = 2:4:50
     L = length(train_price);
@@ -97,7 +99,10 @@ for p = 2:4:50
     % solve for predictor coefficients
     a = -R\r;
 
-    rhat = filter(-[a(1) a(2)],1,real_price);
+    rhat = filter(-[flip(a)],1,real_price);
+    
+    rhat_vects{count} = rhat;
+    count = count + 1;
     
     arx = a' * r_x(2:end)';
     
@@ -106,13 +111,33 @@ for p = 2:4:50
     err = [err error];
 end
 
+figure;
 plot(2:4:50,err)
 
+%% (a) (c)
 
+avg_vects = zeros(1,13);
 
+% for ii = 1:13
+%     pred_price = rhat_vects{1,ii};
+%     diff_sum = 0;
+%     for jj = 1:length(real_price)
+%         diff = (pred_price(jj) - real_price(jj))^2;
+%         diff_sum = diff_sum + diff;
+%     end
+%     avg_err = diff_sum/length(real_price);
+%     avg_vects(ii) = avg_err;
+% end
+    
         
+for ii = 1:13
+    pred_price = rhat_vects{1,ii};
+    diff_sum = pred_price - real_price;
+    avg_err = diff_sum' * diff_sum / length(real_price);
+    avg_vects(ii) = avg_err;
+end
         
-        
-        
+plot(2:4:50,avg_vects)
+     
         
         
