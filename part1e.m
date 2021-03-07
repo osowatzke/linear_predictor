@@ -14,7 +14,6 @@ function part1e(djiaw)
         end
     end
     x = djiaw(p+1:N);
-    size(x)
     a = -X\x;
     
     % determine upper bound of how much you could make
@@ -36,5 +35,20 @@ function part1e(djiaw)
     end
     
     % output upper bounds
-    fprintf('\nUpper bound on how much you could make: $%.2f\n', investment);
+    fprintf('\nUpper bound on how much you could make if you made\n');
+    fprintf('omniscient trading decisions: $%.2f\n', investment);
+    
+    % determine lower bound (all money left in bank)
+    investment = 1000*(1+0.03/52)^520;
+    
+    % output lower bound
+    fprintf('\nLower bound on how much you could make if you only\n');
+    fprintf('invested your money in the bank: $%.2f\n', investment);
+    
+    % determine lower bound (all money placed in stock market)
+    investment = 1000*djiaw(N+p)/djiaw(p);
+    
+    % output lower bound
+    fprintf('\nLower bound on how much you could make if you only\n');
+    fprintf('invested your money in the stock market: $%.2f\n', investment);
 end
