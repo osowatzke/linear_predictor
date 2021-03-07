@@ -27,4 +27,18 @@ function part1f(djiaw)
     % output upper bounds
     fprintf('\n\tUpper bound on how much you could make if you made\n');
     fprintf('\tomniscient trading decisions: $%.2f\n', investment);
+    
+    % dermine lower bound (all in the bank account)
+    investment = 1000*bank_gain^N;
+    
+    % output lower bound
+    fprintf('\n\tLower bound on how much you could make if you only\n');
+    fprintf('\tinvested your money in the bank: $%.2f\n', investment);
+    
+    % determine lower bound (all money placed in stock market)
+    investment = 1000*djiaw(end)/djiaw(end-N);
+    
+    % output lower bound
+    fprintf('\n\tLower bound on how much you could make if you only\n');
+    fprintf('\tinvested your money in the stock market: $%.2f\n', investment);
 end
