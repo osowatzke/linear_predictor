@@ -37,5 +37,5 @@ function part1a(djiaw)
     % you need to make the same amount
     r = 52*((value/1000)^(1/(num_weeks-1))-1);
     fprintf('\nIf you invested $1000 in the bank for %d weeks,\n', num_weeks-1);
-    fprintf('you would need an APR of %%%.2f to earn as much as the DJIA\n', 100*r);
+    fprintf('you would need an APR of %.2f%% to earn as much as the DJIA\n', 100*r);
 end
