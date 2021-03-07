@@ -12,3 +12,6 @@ part1a(djiaw);
 % as actual weekly average
 part1c(a,X,djiaw)
 
+% plot total squared prediction error vs p
+part1d(djiaw)
+
