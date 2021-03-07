@@ -88,4 +88,10 @@ function part1f(djiaw)
     % output results of linear predictor
     fprintf('\n\tHow much you would make if you based your\n');
     fprintf('\tdecisions on the linear predictor: $%.2f\n', investment);
+    
+    % determine equivalent APR
+    r = 52*((investment/1000)^(1/N)-1);
+    
+    % output equivalent APR
+    fprintf('\n\tEquivalent APR for predictor: %.2f%%\n', r*100);
 end  
