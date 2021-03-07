@@ -50,7 +50,8 @@ end
 
 % % total money gained at the end of investment interval = $ 104196.93
 
-fprintf('(a) Total money gained at the end of the investment interval = $%.2f\n',total);
+fprintf('\n(a) Total money gained at the end of the investment ');
+fprintf('interval = $%.2f\n',total);
 
 %% (a) Money through savings account
 
@@ -58,14 +59,15 @@ fprintf('(a) Total money gained at the end of the investment interval = $%.2f\n'
 % investment interval
 rate = ((total/1000)^(1/length(price))-1)*52;
 % % 5.128% APR to achieve same level of performance.
-fprintf('(a) %.3f%% APR to achieve same level of performance.\n', rate*100);
+fprintf('(a) %.3f%% APR to achieve same level of performance.\n',rate*100);
 
 % number of weeks needed to reach same amount at DJIA investment if APR
 % remains 3%
 no_weeks = log(total/1000) / log(1+0.03/52);
 no_weeks = round(no_weeks);
 % % 8055.88 rounded to 8056 weeks to achieve same level of performance.
-fprintf('(a) It will take %d weeks to achieve the same level of performance at 3%% APR.\n',no_weeks);
+fprintf('(a) It will take %d weeks to achieve the same ',no_weeks);
+fprintf('level of performance at 3%% APR.\n');
 
 %% (b) Solve for vector of linear predictor coefficients, a
 
@@ -84,7 +86,7 @@ end
 % solve for linear predictor coefficients
 a = -X \ x;
 
-fprintf('(b) Linear predictor coefficients for p = 3, N = 520:\n');
+fprintf('\n(b) Linear predictor coefficients for p = 3, N = 520:\n');
 disp(a);
 % % a1 = 0.0268
 % % a2 = 0.0938
@@ -137,7 +139,7 @@ end
 % % 23638.0642056466
 
 % both total squared error = 23638
-fprintf('(c) Total squared error for xhat1 =  %g \n',tse_e1);
+fprintf('\n(c) Total squared error for xhat1 =  %g \n',tse_e1);
 fprintf('(c) Total squared error for xhat2 =  %g \n',tse_e2);
 
 %% (d) Finding linear predictor coefficients for different orders of p
@@ -201,6 +203,13 @@ xlabel('p'); ylabel('Total Squared Prediction Error');
 % Given choices of p from only 1 to 10, we choose the p value with the 
 % lowest total squared prediction error. Therefore, p = 10.
 
+fprintf('\n(d) Observe a linear relationship between p and total\n');
+fprintf('squared errors. There is no observable "knee". \n');
+fprintf('Given range of p from 1 to 10, p value is chosen\n');
+fprintf('such that it has the overall lowest total squared\n');
+fprintf('prediction error. Therefore, p = 10. \n');
+
+
 %% (e) Apply various strategies to predict 520 week values from p-th week
 
 N = 520;
@@ -230,7 +239,7 @@ for ii = p_chosen:p_chosen+N-1
 end
         
 % % upper bound $ 4703277.85
-fprintf('(e) Upper bound: $ %.2f\n',upper_value);
+fprintf('\n(e) Upper bound: $ %.2f\n',upper_value);
 
 lower_djia = 1000;
 
@@ -284,6 +293,8 @@ fprintf('(e) Predicted value: $ %.2f\n',pred_val);
 
 %% (f) Predicting values in the most recent decade 
 
+
+
 upper_value = 1000;
 
 % for ii = p_chosen:p_chosen+N-1
@@ -306,7 +317,7 @@ for ii = length(price)-520:length(price)-1
     
 end
 
-fprintf('(f) Upper bound: $ %.2f\n',upper_value);
+fprintf('\n(f) Upper bound: $ %.2f\n',upper_value);
 
 
 lower_bank = 1000;
@@ -325,6 +336,8 @@ for ii = length(price)-520:length(price)-1
 end
 
 fprintf('(f) Lower bound with DJIA investment: $ %.2f\n',lower_djia);
+
+pred_val = 1000;
 
 for ii = length(price)-520:length(price)-1
     
@@ -347,3 +360,9 @@ for ii = length(price)-520:length(price)-1
 end
 
 fprintf('(f) Predicted value: $ %.2f\n',pred_val);
+
+% best APR to achieve same balance as linear predictor in 520 weeks
+rate = ((pred_val/1000)^(1/N)-1)*52;
+
+fprintf('(f) %.3f%% APR to achieve same level of performance.\n', rate*100);
+
