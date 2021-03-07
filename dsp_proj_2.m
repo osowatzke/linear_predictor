@@ -175,7 +175,7 @@ for p=1:p_max
     % generate linear predictor coefficient vector
     a = -X \ x;
     
-    % store vector
+    % store coefficients vector
     a_vects{p} = a;
     
     % generate prediction error
@@ -199,10 +199,6 @@ grid on;
 title('(d) Total squared prediction error vs p');
 xlabel('p'); ylabel('Total Squared Prediction Error');
 
-% It is observed that higher values of p produces lower prediction errors. 
-% Given choices of p from only 1 to 10, we choose the p value with the 
-% lowest total squared prediction error. Therefore, p = 10.
-
 fprintf('\n(d) Observe a linear relationship between p and total\n');
 fprintf('squared errors. There is no observable "knee". \n');
 fprintf('Given range of p from 1 to 10, p value is chosen\n');
@@ -217,7 +213,6 @@ p_chosen = 10;
 
 % Setting the upper bound, initial investment of 1000 at week p
 upper_value = 1000;
-
 % Iterate from week p+1 onwards for 520 weeks 
 for ii = p_chosen:p_chosen+N-1
     
@@ -237,47 +232,48 @@ for ii = p_chosen:p_chosen+N-1
     end
         
 end
-        
-% % upper bound $ 4703277.85
+% upper bound $ 4700565.98
 fprintf('\n(e) Upper bound: $ %.2f\n',upper_value);
 
+% Setting initial investment into DJIA
 lower_djia = 1000;
-
-% lower bound by investing into DJIA
+% compute lower bound by investing into DJIA from wk 11 to wk 530
 for ii = p_chosen:p_chosen+N-1
     lower_djia = lower_djia * price(ii+1)/price(ii);
 end
-
-% % lower bound DJIA = $ 543.77
+% % lower bound DJIA = $ 544.44
 fprintf('(e) Lower bound with DJIA investment: $ %.2f\n',lower_djia);
 
+% Setting initial investment into bank
 lower_bank = 1000;
-% lower bound by investing into bank
+% compute lower bound by investing into bank for 520 weeks
 for ii = 1:N
     lower_bank = lower_bank * (1+0.03/52);
 end
-
 % % lower bound bank = $ 1349.74
 fprintf('(e) Lower bound with bank: $ %.2f\n',lower_bank);
 
+% Set initial investment before using linear predictor
 pred_val = 1000;
-
+% Get linear predictor coefficients for p = 10
 a_10 = a_vects{1,10};
-
-% compute predicted values using coefficients when p = 10
+% Compute predicted values using coefficients for p = 10
 xhat_p = filter(-[0 a_10(10) a_10(9) a_10(8) a_10(7) a_10(6) ...
     a_10(5) a_10(4) a_10(3) a_10(2) a_10(1)],1,price);
 
+% $1000 is stored at the end of p-th week
+% predict future 520 week values starting from (p+1)-th week
 % compute predicted values from week 11 to week 530 using linear predictor
 for ii = p_chosen:p_chosen+N-1
     
     % compute returns from savings account
     by_bank = pred_val * (1+0.03/52);
     
-    % compute predicted returns from DJIA
+    % compute predicted returns from DJIA using predicted price and price
+    % from previous week
     by_djia = pred_val * xhat_p(ii+1)/price(ii);
     
-    % if DJIA has higher prediction return than bank, invest into DJIA 
+    % if DJIA has higher predicted return than bank, invest into DJIA 
     if by_djia > by_bank
         % calculate actual gain using real stock price data
         pred_val = pred_val * price(ii+1)/price(ii);
@@ -289,15 +285,14 @@ for ii = p_chosen:p_chosen+N-1
         
 end
 
+% Return value using linear predictor = $ 1422.65
 fprintf('(e) Predicted value: $ %.2f\n',pred_val);
 
 %% (f) Predicting values in the most recent decade 
 
-
-
+% Initial investment before investing into best of DJIA or bank
 upper_value = 1000;
-
-% for ii = p_chosen:p_chosen+N-1
+% compute returns using last 520 weeks of DJIA data or bank APR
 for ii = length(price)-520:length(price)-1
     
     % compute returns from savings account
@@ -317,28 +312,32 @@ for ii = length(price)-520:length(price)-1
     
 end
 
+% upper bound = $ 104798.92
 fprintf('\n(f) Upper bound: $ %.2f\n',upper_value);
 
-
+% Initial investment before investing into bank
 lower_bank = 1000;
-% lower bound by investing into bank
+% compute returns by investing into bank for 520 weeks
 for ii = 1:N
     lower_bank = lower_bank * (1+0.03/52);
 end
-
+% Lower bound with bank = $ 1349.74
 fprintf('(f) Lower bound with bank: $ %.2f\n',lower_bank);
 
+% Initial investment before investing into DJIA
 lower_djia = 1000;
-
-% lower bound by investing into DJIA
+% compute returns by investing into DJIA using last 520 weeks of DJIA data
 for ii = length(price)-520:length(price)-1
     lower_djia = lower_djia * price(ii+1)/price(ii);
 end
-
+% Lower bound from DJIA = $ 3521.28
 fprintf('(f) Lower bound with DJIA investment: $ %.2f\n',lower_djia);
 
+% Initial investment before using linear predictor
 pred_val = 1000;
-
+% compute returns from last 520 weeks in DJIA data, while
+% using linear predictor coefficients and predicted values 
+% with p = 10 from part (d)
 for ii = length(price)-520:length(price)-1
     
     % compute returns from savings account
@@ -358,11 +357,11 @@ for ii = length(price)-520:length(price)-1
     end
         
 end
-
+% predicted  = $ 2265.53
 fprintf('(f) Predicted value: $ %.2f\n',pred_val);
 
 % best APR to achieve same balance as linear predictor in 520 weeks
 rate = ((pred_val/1000)^(1/N)-1)*52;
-
-fprintf('(f) %.3f%% APR to achieve same level of performance.\n', rate*100);
+% 8.185% 
+fprintf('(f) %.3f%% APR to achieve same level of performance.\n',rate*100);
 
