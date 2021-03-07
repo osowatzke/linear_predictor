@@ -201,12 +201,10 @@ xlabel('p'); ylabel('Total Squared Prediction Error');
 % Given choices of p from only 1 to 10, we choose the p value with the 
 % lowest total squared prediction error. Therefore, p = 10.
 
-%% (e) 
+%% (e) Apply various strategies to predict 520 week values from p-th week
 
 N = 520;
 p_chosen = 10;
-
-rr = 0.03;
 
 % Setting the upper bound, initial investment of 1000 at week p
 upper_value = 1000;
@@ -255,11 +253,11 @@ fprintf('(e) Lower bound with bank: $ %.2f\n',lower_bank);
 
 pred_val = 1000;
 
-% generated predicted values when p = 10
-% xhat_p = -Xmat_vects{1,10} * a_vects{1,10};
 a_10 = a_vects{1,10};
 
-xhat_p = filter(-[0 a(10) a(9) a(8) a(7) a(6) a(5) a(4) a(3) a(2) a(1)],1,price);
+% compute predicted values using coefficients when p = 10
+xhat_p = filter(-[0 a_10(10) a_10(9) a_10(8) a_10(7) a_10(6) ...
+    a_10(5) a_10(4) a_10(3) a_10(2) a_10(1)],1,price);
 
 % compute predicted values from week 11 to week 530 using linear predictor
 for ii = p_chosen:p_chosen+N-1
@@ -267,11 +265,12 @@ for ii = p_chosen:p_chosen+N-1
     % compute returns from savings account
     by_bank = pred_val * (1+0.03/52);
     
-    % compute returns from DJIA
+    % compute predicted returns from DJIA
     by_djia = pred_val * xhat_p(ii+1)/price(ii);
     
-    % if DJIA has higher returns than the bank, then invest into DJIA 
+    % if DJIA has higher prediction return than bank, invest into DJIA 
     if by_djia > by_bank
+        % calculate actual gain using real stock price data
         pred_val = pred_val * price(ii+1)/price(ii);
 
     % if bank has higher or same return, then invest into bank
@@ -283,4 +282,68 @@ end
 
 fprintf('(e) Predicted value: $ %.2f\n',pred_val);
 
+%% (f) Predicting values in the most recent decade 
 
+upper_value = 1000;
+
+% for ii = p_chosen:p_chosen+N-1
+for ii = length(price)-520:length(price)-1
+    
+    % compute returns from savings account
+    by_bank = upper_value * (1+0.03/52);
+    
+    % compute returns from DJIA
+    by_djia = upper_value * price(ii+1)/price(ii);
+    
+    % if DJIA has higher returns than the bank, then invest into DJIA 
+    if by_djia > by_bank
+        upper_value = by_djia;
+
+    % if bank has higher or same return, then invest into bank
+    else
+        upper_value = by_bank;
+    end
+    
+end
+
+fprintf('(f) Upper bound: $ %.2f\n',upper_value);
+
+
+lower_bank = 1000;
+% lower bound by investing into bank
+for ii = 1:N
+    lower_bank = lower_bank * (1+0.03/52);
+end
+
+fprintf('(f) Lower bound with bank: $ %.2f\n',lower_bank);
+
+lower_djia = 1000;
+
+% lower bound by investing into DJIA
+for ii = length(price)-520:length(price)-1
+    lower_djia = lower_djia * price(ii+1)/price(ii);
+end
+
+fprintf('(f) Lower bound with DJIA investment: $ %.2f\n',lower_djia);
+
+for ii = length(price)-520:length(price)-1
+    
+    % compute returns from savings account
+    by_bank = pred_val * (1+0.03/52);
+    
+    % compute predicted returns from DJIA
+    by_djia = pred_val * xhat_p(ii+1)/price(ii);
+    
+    % if DJIA has higher prediction return than bank, invest into DJIA 
+    if by_djia > by_bank
+        % calculate actual gain using real stock price data
+        pred_val = pred_val * price(ii+1)/price(ii);
+
+    % if bank has higher or same return, then invest into bank
+    else
+        pred_val = by_bank;
+    end
+        
+end
+
+fprintf('(f) Predicted value: $ %.2f\n',pred_val);
