@@ -6,5 +6,9 @@ djiaw = djiaw_total(:,2);
 part1a(djiaw);
 
 % determine linear predictor coefficients for p=3 and N=520
-a = part1b(djiaw);
+[a,X] = part1b(djiaw);
+
+% using spects from part b, plot predicted values on same set of axis
+% as actual weekly average
+part1c(a,X,djiaw)
 
