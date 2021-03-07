@@ -15,3 +15,7 @@ part1c(a,X,djiaw)
 % plot total squared prediction error vs p
 part1d(djiaw)
 
+% determine bounds on how much you could make and how much you could make 
+% using your predictor
+part1e(djiaw)
+
