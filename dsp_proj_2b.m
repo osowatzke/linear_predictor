@@ -287,7 +287,7 @@ real_cc = price(jan_1_18:jun_30_18);
 % (a) predicting using data from a year before
 
 % create subset of data for training data -> one year before
-train_price = price(jan_1_18-365:jun_30_18-1);   
+train_price = price(jan_1_18-365:jan_1_18-1);   
 
 % create rx matrix
 p = 2;
@@ -321,7 +321,7 @@ fprintf('\nAverage predicted error for one year data: %.2f\n',err_1_yr);
 % (b) predicting using data from 6 months before
 
 % create subset of data for training data -> 6 months before
-train_price = price(jan_1_18-180:jun_30_18-1);   
+train_price = price(jan_1_18-180:jan_1_18-1);   
 
 % create rx matrix
 p = 2;
@@ -355,7 +355,7 @@ fprintf('\nAverage predicted error for 180 days data: %.2f\n',err_6_mths);
 % (c) predicting using data from 1 month before
 
 % create subset of data for training data -> 1 month before
-train_price = price(jan_1_18-30:jun_30_18-1);   
+train_price = price(jan_1_18-30:jan_1_18-1);   
 
 % create rx matrix
 p = 2;
@@ -409,6 +409,4 @@ legend('Real','1 month data');
 ylabel('Block Difficulty');
 title('Predicted and Real Block Difficulty from Jan 1, 2018 to June 30, 2018');
 xlabel('Week of 2018');
-
-
 
