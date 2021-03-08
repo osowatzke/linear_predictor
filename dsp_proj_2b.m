@@ -61,7 +61,8 @@ r = r_x(2:end)';
 % solve for predictor coefficients
 a = -R\r;
 
-rhat = filter(-[a(1) a(2)],1,real_price);
+rhat = filter(-[0 a'],1,price);
+rhat = rhat(start:fin);
 
 figure;
 plot(1:length(real_date),real_price,'r');
@@ -99,45 +100,47 @@ for p = 2:4:50
     % solve for predictor coefficients
     a = -R\r;
 
-    rhat = filter(-[flip(a)],1,real_price);
+    rhat = filter(-[0 a'],1,real_price);
     
     rhat_vects{count} = rhat;
     count = count + 1;
     
-    arx = a' * r_x(2:end)';
+%     arx = a' * r_x(2:end)';
     
-    error = r_x(1) + arx;
+%     error = r_x(1) + arx;
     
-    err = [err error];
+    % total squared error for rhat
+    tse = 0;
+    for ii=1:length(real_price)
+        diff = rhat(ii) - real_price(ii);
+        diff_sq = diff^2;
+        tse = tse + diff_sq;
+    end
+    
+    err = [err tse];
 end
 
 figure;
 plot(2:4:50,err)
+title('Least Squares Error E vs P');
+xlabel('P');
+ylabel('Least Squared Error E');
 
 %% (a) (c)
 
 avg_vects = zeros(1,13);
-
-% for ii = 1:13
-%     pred_price = rhat_vects{1,ii};
-%     diff_sum = 0;
-%     for jj = 1:length(real_price)
-%         diff = (pred_price(jj) - real_price(jj))^2;
-%         diff_sum = diff_sum + diff;
-%     end
-%     avg_err = diff_sum/length(real_price);
-%     avg_vects(ii) = avg_err;
-% end
     
-        
 for ii = 1:13
     pred_price = rhat_vects{1,ii};
     diff_sum = pred_price - real_price;
-    avg_err = diff_sum' * diff_sum / length(real_price);
+    avg_err = diff_sum' * diff_sum / length(diff_sum);
     avg_vects(ii) = avg_err;
 end
-        
-plot(2:4:50,avg_vects)
+figure;        
+plot(2:4:50,avg_vects);
+title('Average Predicted Errors vs P');
+xlabel('P');
+ylabel('Average Predicted Errors')
      
         
         
