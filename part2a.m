@@ -113,7 +113,7 @@ function part2a(block_difficulty)
     
     % plot least squares error vs p
     figure(6)
-    plot(p,E2)
+    plot(p,E)
     xlabel('p');
     ylabel('E');
     title('Plot of Least Squares Error vs p');
