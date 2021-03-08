@@ -33,3 +33,7 @@ part2a(block_difficulty);
 % uses January 1, 2016 to Dec. 31, 2016 as training data
 % to predict difficulty 
 part2b(block_difficulty);
+
+% make prediction for Jan. 1,2018 to June 30,2018 using previous
+% year, 6 months, and month of data
+part2c(block_difficulty);
