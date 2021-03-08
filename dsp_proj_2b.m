@@ -65,9 +65,9 @@ rhat = filter(-[0 a'],1,price);
 rhat = rhat(start:fin);
 
 figure;
-plot(1:length(real_date),real_price,'r');
+plot(1:length(real_price),real_price);
 hold on
-plot(1:length(real_date),rhat,'-.k');
+plot(1:length(real_price),rhat);
 legend('Real','Predicted');
 ylabel('Block Difficulty');
 title('Predicted and Real Block Difficulty');
