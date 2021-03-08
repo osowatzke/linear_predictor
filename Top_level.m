@@ -29,3 +29,7 @@ block_difficulty = block_difficulty(:,2);
 % uses July 30, 2015 to Dec. 31, 2015 as training data
 % to predict difficulty on Jan. 1, 2016 to June 30, 2016. 
 part2a(block_difficulty);
+
+% uses January 1, 2016 to Dec. 31, 2016 as training data
+% to predict difficulty 
+part2b(block_difficulty);
