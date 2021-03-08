@@ -43,6 +43,7 @@ function part2b(block_difficulty)
     % predicted difficulty from Jan. 1,2017 to Dec 31, 2017.
     xhat1 = predicted_difficulty(L+N+1:L+N+365);
     
+    % plot results
     figure(8)
     plot(1:365,x1,1:365,xhat1);
     xlabel('Days since December 31, 2016');
@@ -50,6 +51,27 @@ function part2b(block_difficulty)
     legend('Actual Difficulty','Predicted Difficulty');
     
     % average predicted error for Jan. 1,2017 to Dec 31, 2017.
-    %E = 
-   
+    e_avg1 = mean((x1-xhat1).^2);
+    
+    % output average predicted error
+    fprintf('\nAverage predicted error for Jan. 1, 2017 to Dec. 31, 2017: %.2f\n', e_avg1);
+    
+    % actual difficulty from Jan. 1,2018 to Dec 31, 2018.
+    x2 = block_difficulty(L+N+1+365:L+N+2*365);
+    
+    % predicted difficulty from Jan. 1,2018 to Dec 31, 2018.
+    xhat2 = predicted_difficulty(L+N+1+365:L+N+2*365);
+    
+     % plot results
+    figure(9)
+    plot(1:365,x2,1:365,xhat2);
+    xlabel('Days since December 31, 2017');
+    title('Plot of Predicted and Actual Block Difficulty');
+    legend('Actual Difficulty','Predicted Difficulty');
+    
+    % average predicted error for Jan. 1,2017 to Dec 31, 2017.
+    e_avg2 = mean((x2-xhat2).^2);
+    
+    % output average predicted error
+    fprintf('\nAverage predicted error for Jan. 1, 2018 to Dec. 31, 2018: %.2f\n', e_avg2);
 end
