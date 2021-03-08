@@ -59,6 +59,7 @@ function part2a(block_difficulty)
     % define empty array for Least Squares Error and average predicted
     % error
     E = zeros(1,length(p));
+    E2 = zeros(1,length(p));
     e_avg = zeros(1,length(p));
     
     % loop through each value of p
@@ -91,6 +92,11 @@ function part2a(block_difficulty)
 
         % solve for predictor coefficients
         a = -R\r;
+        s = 0;
+        for n=1:length(a)
+            s = s + a(n)*rx(n+1);
+        end
+        E2(k) = rx(1)+s;
         
         % real difficulty
         x = block_difficulty(L+1:L+182);
@@ -107,7 +113,7 @@ function part2a(block_difficulty)
     
     % plot least squares error vs p
     figure(6)
-    plot(p,E)
+    plot(p,E2)
     xlabel('p');
     ylabel('E');
     title('Plot of Least Squares Error vs p');
