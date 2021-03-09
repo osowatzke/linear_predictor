@@ -54,7 +54,7 @@ function part2b(block_difficulty)
     e_avg1 = mean((x1-xhat1).^2);
     
     % output average predicted error
-    fprintf('\nAverage predicted error for Jan. 1, 2017 to Dec. 31, 2017: %.2f\n', e_avg1);
+    fprintf('Average predicted error for Jan. 1, 2017 to Dec. 31, 2017: %.2f\n', e_avg1);
     
     % actual difficulty from Jan. 1,2018 to Dec 31, 2018.
     x2 = block_difficulty(L+N+1+365:L+N+2*365);
