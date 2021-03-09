@@ -6,7 +6,7 @@ function part2a(block_difficulty)
     
     % problem specs
     L = 155;
-    p = 10;
+    p = 2;
     
     % empty array rx
     rx = zeros(1,p+1);
@@ -35,7 +35,7 @@ function part2a(block_difficulty)
     r = rx(2:end)';
     
     % solve for predictor coefficients
-    a = -R\r;
+    a = -R\r
   
     % real difficulty
     real_difficulty = block_difficulty(L+1:L+182);
@@ -47,7 +47,7 @@ function part2a(block_difficulty)
     % plot predicted difficulty and real difficulty
     figure(5)
     plot(1:182,real_difficulty, 1:182,predicted_difficulty);
-    xlabel('Days Since December 31st');
+    xlabel('Days Since December 31st, 2015');
     title('Plot of Real Difficulty and Predicted Difficulty');
     legend('Real Difficulty', 'Predicted Difficulty');
     
