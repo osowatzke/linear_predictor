@@ -20,7 +20,7 @@ function part2c(block_difficulty)
     plot(1:(end_index-start_index)+1,x,1:(end_index-start_index)+1,xhat);
     legend('Predicted Difficulty','Actual Difficulty');
     xlabel('Days Since December 31, 2017');
-    title('Plot Difficulty when 365 Days of Data is Used to Train Predictor');
+    title('Plot of Difficulty when 365 Days of Data is Used to Train Predictor');
     
     % average error for predictor trained with 365 days of data
     e_avg = mean((x-xhat).^2);
@@ -44,7 +44,7 @@ function part2c(block_difficulty)
     plot(1:(end_index-start_index)+1,x,1:(end_index-start_index)+1,xhat);
     legend('Predicted Difficulty','Actual Difficulty');
     xlabel('Days Since December 31, 2017');
-    title('Plot Difficulty when 180 Days of Data is Used to Train Predictor');
+    title('Plot of Difficulty when 180 Days of Data is Used to Train Predictor');
     
     % average error for predictor trained with 180 days of data
     e_avg = mean((x-xhat).^2);
@@ -68,7 +68,7 @@ function part2c(block_difficulty)
     plot(1:(end_index-start_index)+1,x,1:(end_index-start_index)+1,xhat);
     legend('Predicted Difficulty','Actual Difficulty');
     xlabel('Days Since December 31, 2017');
-    title('Plot Difficulty when 30 Days of Data is Used to Train Predictor');
+    title('Plot of Difficulty when 30 Days of Data is Used to Train Predictor');
     
     % average error for predictor trained with 30 days of data
     e_avg = mean((x-xhat).^2);
