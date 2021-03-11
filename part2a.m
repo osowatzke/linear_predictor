@@ -60,6 +60,7 @@ function part2a(block_difficulty)
     % error
     E = zeros(1,length(p));
     E2 = zeros(1,length(p));
+    E3 = zeros(1,length(p));
     e_avg = zeros(1,length(p));
     
     % loop through each value of p
@@ -92,6 +93,10 @@ function part2a(block_difficulty)
 
         % solve for predictor coefficients
         a = -R\r;
+        xhat3 = filter(-[0;a],1,[block_difficulty(1:L);zeros(p(k),1)]);
+        x3 = [block_difficulty(1:L);zeros(p(k),1)];
+        e3 = x3-xhat3;
+        E3(k) = e3'*e3;
         s = 0;
         for n=1:length(a)
             s = s + a(n)*rx(n+1);
@@ -113,7 +118,7 @@ function part2a(block_difficulty)
     
     % plot least squares error vs p
     figure(6)
-    plot(p,E2)
+    plot(p,E2,p,E3)
     xlabel('p');
     ylabel('E');
     title('Plot of Least Squares Error vs p');
@@ -124,5 +129,8 @@ function part2a(block_difficulty)
     xlabel('p');
     ylabel('Average Predicted Error');
     title('Plot of Average Predicted Error vs p');
+    
+    figure(13)
+    plot(1:length(x3),x3,1:length(xhat3),-xhat3);
 end
 
